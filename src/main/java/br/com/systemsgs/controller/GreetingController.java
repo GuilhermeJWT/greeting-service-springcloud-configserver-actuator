@@ -20,9 +20,13 @@ public class GreetingController {
 	@Autowired
 	private GreetingConfiguration configuration;
 	
-	
-	public ModelGreeting greeting (@RequestParam(value = "name", defaultValue = "Nome Gui") String name) {
-		return new ModelGreeting(contador.incrementAndGet(), String.format(template, name));
+	public ModelGreeting greeting (@RequestParam(value = "name", defaultValue = "") String name) {
+		
+		if(name.isEmpty()) {
+			name = configuration.getDefaultValue();
+		}
+		
+		return new ModelGreeting(contador.incrementAndGet(), String.format(template, configuration.getGreeting()));
 	}
 
 }
